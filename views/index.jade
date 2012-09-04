@@ -1,12 +1,11 @@
 extends layout
 block content
   h1= title
-  p Welcome to #{title}
   p #{title} - Follow your followers
   form(id='trousers_form')
    input(type='text', name='username', id='username', placeholder="What's your @Twitter?")
   .box_title
-   b Non Followers
+   b Non Followers: 
    label(class='non_followers_label')
   .box_title
    b Followers: 

@@ -6,7 +6,7 @@ a {
 	color: #00B7FF;
 }
 .box_title, .non_followers, .followers, .both_f_and_f, .friends{
-	width: 320px;	
+	width: 330px;	
 	display:inline-block;
 	float:left;
 	border:1px dashed #ccc;
@@ -15,6 +15,7 @@ a {
 }
 .non_followers, .followers, .both_f_and_f, .friends{
 	height: 450px;
+	overflow-y:scroll;
 }
 
 
@@ -22,6 +23,7 @@ a {
 	border-bottom: 1px solid black;
 	background-color:#EBE8E9;
 	height:57px;
+	box-shadow:0 1px 3px rgba(0,0,0,0.25),0 -1px 0 rgba(0,0,0,0.1) inset;
 }
 .entry label{
 	color: #ccc;
