@@ -1,14 +1,28 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 50px;
+	font: 14px "Lucida Grande",Helvetica,Arial,"sans - serif";
 }
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 .names_and_faces{
 	border:1px dashed #ccc;
-	width:400px;
-	height:400px;
-	overflow-y:auto;
+	width: 800px;
+	height: 400px;
+	overflow-y: auto;
+}
+
+.entry {
+	border-bottom: 1px solid black;
+	clear: both;
+	height: 50px;
+	padding-bottom:2px;
+}
+.entry label{
+	color: #999;
+}
+
+.entry img {
+	float: left;
 }
