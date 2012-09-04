@@ -1,25 +1,29 @@
+var followers, friends; //Globals, need to find a cleaner way though.
 $(document).ready(function() {
 
 	$("#trousers_form").on("submit", function() {
 
 		var username = $("#username").val();
 		var username = username.replace("@", ""); //Clean up, for safety;
-		var followers, friends;
 		$.get("/followers/" + username, function(data) {
-			followrs = 	troursers.showReturnedList(data, ".followers", "Followers");
-		});
-		$.get("/friends/" + username, function(data) {
-			friends = troursers.showReturnedList(data, ".friends", "Following");
-		});
+			followers = troursers.showReturnedList(data, ".followers", "Followers");
+		}).then(function() {
+			$.get("/friends/" + username, function(data) {
+				friends = troursers.showReturnedList(data, ".friends", "Following");
+			}).done(function() {
+				var both = _.intersection(followers, friends);
+				$.post("/union/", {
+					union: both.join(","),
+					username: username
+				}, function(data) {
+					var throwaway = troursers.showReturnedList(data, ".both_f_and_f", "Following/Followers");
+				})
 
-		var both = _.union(followers, friends);
-		$.post("/union/",{union : both.join(","), username: username} , function(data) {
-			var throwaway = troursers.showReturnedList(data, ".both_f_and_f", "Following/Followers");
-		});
 
+			})
+		});
 		return false;
 	})
-
 });
 
 var troursers = {};
@@ -28,7 +32,7 @@ troursers.showReturnedList = function(str, classNameOfTarget, title) {
 	var data = JSON.parse(str);
 	var cont = $(classNameOfTarget).eq(0);
 	cont.html(""); // clean up
-	cont.append("<h3>"+title+": " + data.length + "</h3>");
+	cont.append("<h3>" + title + ": " + data.length + "</h3>");
 	for (var i = 0; i < data.length; i++) {
 		cont.append(troursers.getProfileEntry(data[i]));
 	}
@@ -47,11 +51,6 @@ troursers.getIds = function(data) {
 	for (var i = 0; i < data.length; i++) {
 		ids.push(data[i].id);
 	}
-/*	var content = {
-		ids: ids,
-		totalCount: data.length
-	};
-	pLayer.set(new Date().getTime(), content);*/
 	return ids;
 }
 

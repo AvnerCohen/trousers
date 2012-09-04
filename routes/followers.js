@@ -50,8 +50,9 @@ exports.friends = function(req, res) {
 };
 
 exports.union = function(req, res) {
-	var name = req.params.username;
-	var ids = req.params.union.split(",");
+	var name = req.body.username;
+	console.log("Data:" + req.body.union)
+	var ids = req.body.union.split(",");
 	ids = ids.sort();
 	if (ids.length > 99) {
 		ids = ids.splice(0, 99);

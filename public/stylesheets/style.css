@@ -8,7 +8,7 @@ a {
 .followers, .both_f_and_f, .friends{
 	border:1px dashed #ccc;
 	width: 370px;
-	height: 400px;
+	height: 450px;
 	overflow-y: auto;
 	display:inline-block;
 	float:left;
