@@ -1,0 +1,14 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.names_and_faces{
+	border:1px dashed #ccc;
+	width:400px;
+	height:400px;
+	overflow-y:auto;
+}
