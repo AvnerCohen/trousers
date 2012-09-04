@@ -1,8 +1,9 @@
-var followers, friends; //Globals, need to find a cleaner way though.
+
 $(document).ready(function() {
 
 	$("#trousers_form").on("submit", function() {
 
+		var followers, friends; //Globals, need to find a cleaner way though.
 		var username = $("#username").val();
 		var username = username.replace("@", ""); //Clean up, for safety;
 		$.get("/followers/" + username, function(data) {
@@ -10,7 +11,7 @@ $(document).ready(function() {
 		}).then(function() {
 			$.get("/friends/" + username, function(data) {
 				friends = troursers.showReturnedList(data, ".friends");
-			}).done(function() {
+			}).then(function() {
 				var both = _.intersection(followers, friends);
 				$.post("/union/", {
 					union: both.join(","),
@@ -18,8 +19,14 @@ $(document).ready(function() {
 				}, function(data) {
 					var throwaway = troursers.showReturnedList(data, ".both_f_and_f");
 				})
-
-
+			}).done(function(){
+				var non_followers = _.difference(friends, followers);
+				$.post("/union/", {
+					union: non_followers.join(","),
+					username: username
+				}, function(data) {
+					var throwaway = troursers.showReturnedList(data, ".non_followers");
+				})
 			})
 		});
 		return false;
