@@ -1,28 +1,38 @@
 body {
-	padding: 50px;
 	font: 14px "Lucida Grande",Helvetica,Arial,"sans - serif";
 }
 
 a {
 	color: #00B7FF;
 }
-.names_and_faces{
+.followers, .both_f_and_f, .friends{
 	border:1px dashed #ccc;
-	width: 800px;
+	width: 370px;
 	height: 400px;
 	overflow-y: auto;
+	display:inline-block;
+	float:left;
+	padding:2px;
+	margin:5px;
 }
+
 
 .entry {
 	border-bottom: 1px solid black;
-	clear: both;
-	height: 50px;
-	padding-bottom:2px;
+	background-color:#EBE8E9;
+	height:57px;
 }
 .entry label{
-	color: #999;
+	color: #ccc;
+}
+.entry p{
+	clear:right;
+	margin:0px;
+	padding:0px;
 }
 
 .entry img {
-	float: left;
+	border-radius:8px;
+	margin-right: 5px;
+	float:left;
 }

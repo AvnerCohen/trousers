@@ -29,6 +29,9 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/followers/:username', user.followers);
+app.get('/friends/:username', user.friends);
+
+app.post('/union', user.unions);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
