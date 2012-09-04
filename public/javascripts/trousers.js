@@ -17,10 +17,17 @@ var troursers = {};
 
 troursers.showCurrentFollowers = function(str) {
 	var data = JSON.parse(str);
-	var ids = data.ids;
 	var ul = $(".names_and_faces").eq(0).append("<ul>");
-	for (var i = 0; i < ids.length; i++){
-		ul.append("<li>Id: " + ids[i]);
+	for (var i = 0; i < data.length; i++) {
+		ul.append(troursers.getProfileEntry(data[i]));
+		}
 	}
 
-}
+	troursers.getProfileEntry = function(body) {
+		var str = "<li><b>" + body.screen_name + "</b>";
+		str += "<img src='" + body.profile_image_url + "'/>&nbsp;";
+		str += "<b>id:</b>" + body.id;
+		str += ", <b>Following/Followers</b>:" + body.friends_count + "/" + body.followers_count;
+
+		return str;
+	}
