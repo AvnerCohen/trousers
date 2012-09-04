@@ -6,17 +6,17 @@ $(document).ready(function() {
 		var username = $("#username").val();
 		var username = username.replace("@", ""); //Clean up, for safety;
 		$.get("/followers/" + username, function(data) {
-			followers = troursers.showReturnedList(data, ".followers", "Followers");
+			followers = troursers.showReturnedList(data, ".followers");
 		}).then(function() {
 			$.get("/friends/" + username, function(data) {
-				friends = troursers.showReturnedList(data, ".friends", "Following");
+				friends = troursers.showReturnedList(data, ".friends");
 			}).done(function() {
 				var both = _.intersection(followers, friends);
 				$.post("/union/", {
 					union: both.join(","),
 					username: username
 				}, function(data) {
-					var throwaway = troursers.showReturnedList(data, ".both_f_and_f", "Following/Followers");
+					var throwaway = troursers.showReturnedList(data, ".both_f_and_f");
 				})
 
 
@@ -28,11 +28,11 @@ $(document).ready(function() {
 
 var troursers = {};
 
-troursers.showReturnedList = function(str, classNameOfTarget, title) {
+troursers.showReturnedList = function(str, classNameOfTarget) {
 	var data = JSON.parse(str);
 	var cont = $(classNameOfTarget).eq(0);
 	cont.html(""); // clean up
-	cont.append("<h3>" + title + ": " + data.length + "</h3>");
+	$(classNameOfTarget + "_label").html(data.length);
 	for (var i = 0; i < data.length; i++) {
 		cont.append(troursers.getProfileEntry(data[i]));
 	}
