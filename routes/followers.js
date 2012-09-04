@@ -33,7 +33,6 @@ exports.friends = function(req, res) {
 				ids = ids.splice(0, 99);
 				console.log("#### Temporary fix, number of ids is spliced due to twitter API limit.");
 			}
-			console.log("For:" + name + "\n" + ids.join(","));
 			request.get("http://api.twitter.com/1/users/lookup.json?user_id=" + ids.join(","), function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					res.send(body);
