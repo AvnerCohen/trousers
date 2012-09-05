@@ -17,8 +17,15 @@ a {
 	height: 450px;
 	overflow-y:scroll;
 }
+span.counter{
+	font-size:12px;
+}
 
-
+div#spinAjax{
+	position:absolute;
+	top:10%;
+	left:45%;
+}
 .entry {
 	border-bottom: 1px solid black;
 	background-color:#EBE8E9;

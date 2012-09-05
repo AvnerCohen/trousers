@@ -2,21 +2,23 @@ extends layout
 block content
   h1= title
   p #{title} - Follow your followers
+  #spinAjax
+   img(src='images/loader.gif')
   form(id='trousers_form')
    b @
    input(type='text', name='username', id='username', placeholder="What's your @Twitter?")
   .box_title
    b Non Followers: 
-   label(class='non_followers_label')
+   span(class='counter non_followers_label')
   .box_title
    b Followers: 
-   label(class='followers_label')
+   span(class='counter followers_label')
   .box_title
    b Following/Followers: 
-   label(class='both_f_and_f_label')
+   span(class='counter both_f_and_f_label')
   .box_title
    b Following: 
-   label(class='friends_label')
+   span(class='counter friends_label')
   .non_followers
   .followers
   .both_f_and_f
