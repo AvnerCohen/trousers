@@ -12,12 +12,12 @@ exports.followers = function(req, res) {
 					res.send(body);
 				} else {
 					res.send("Error occured, api result:" + response.statusCode);
-					console.log("##########!!!!###\n" + response);
+					console.log("##########!!!!###\n" + JSON.stringify(response));
 				}
 			});
 		} else {
 			res.send("Error occured, api result:" + response.statusCode);
-			console.log("##########!!!!###\n" + response);
+			console.log("##########!!!!###\n" + JSON.stringify(response));
 		}
 	});
 
