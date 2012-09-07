@@ -1,7 +1,7 @@
 var request = require("request");
 
 exports.followers = function(req, res) {
-	var name = req.params.username;
+	var name = req.body.username;
 	request.get("https://api.twitter.com/1/followers/ids.json?cursor=-1&screen_name=" + name, function(error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var ids = JSON.parse(body).ids;
@@ -24,7 +24,7 @@ exports.followers = function(req, res) {
 };
 
 exports.friends = function(req, res) {
-	var name = req.params.username;
+	var name = req.body.username;
 	request.get("https://api.twitter.com/1/friends/ids.json?cursor=-1&screen_name=" + name, function(error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var ids = JSON.parse(body).ids;

@@ -3,11 +3,11 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/followers')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'),
+  routes = require('./routes'),
+  user = require('./routes/followers'),
+  http = require('http'),
+  path = require('path');
 
 var app = express();
 
@@ -20,7 +20,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express["static"](path.join(__dirname, 'public')));
 });
 
 app.configure('development', function(){
@@ -28,8 +28,8 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/followers/:username', user.followers);
-app.get('/friends/:username', user.friends);
+app.post('/followers', user.followers);
+app.post('/friends', user.friends);
 
 app.post('/union', user.union);
 
