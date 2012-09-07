@@ -1,4 +1,5 @@
-var request = require("request");
+var request = require("request"),
+  _ = require('lodash');
 
 exports.followers = function(req, res) {
 	var name = req.body.username;
@@ -6,7 +7,6 @@ exports.followers = function(req, res) {
 		if (!error && response.statusCode == 200) {
 			var ids = JSON.parse(body).ids;
 			ids = ids.sort();
-			console.log("For:" + name + "\n" + ids.join(","));
 			request.get("http://api.twitter.com/1/users/lookup.json?user_id=" + ids.join(","), function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					res.send(body);
@@ -50,14 +50,17 @@ exports.friends = function(req, res) {
 
 exports.union = function(req, res) {
 	var name = req.body.username;
-	console.log("Data:" + req.body.union)
+	var whiteList = req.body.whiteList;
 	var ids = req.body.union.split(",");
 	ids = ids.sort();
+	if (whiteList){
+		whiteList = JSON.parse(whiteList);
+		ids = manageWhiteListed (ids, whiteList, true);
+	}
 	if (ids.length > 99) {
 		ids = ids.splice(0, 99);
 		console.log("#### Temporary fix, number of ids is spliced due to twitter API limit.");
 	}
-	console.log("For:" + name + "\n" + ids.join(","));
 	request.get("http://api.twitter.com/1/users/lookup.json?user_id=" + ids.join(","), function(error, response, body) {
 		if (!error && response.statusCode == 200) {
 			res.send(body);
@@ -67,3 +70,13 @@ exports.union = function(req, res) {
 		}
 	});
 };
+
+//Utility method to clean up ids of whiteListed users;
+//Ids - Array of All non followers
+//WhiteList - industry leaders?
+function manageWhiteListed (ids, whiteList){
+	return _.filter(ids, function (value, key){
+		var exist = (whiteList[value]);
+		return !exist;
+	});
+}

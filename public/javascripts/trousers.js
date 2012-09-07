@@ -16,8 +16,7 @@ $(document).ready(function() {
 				var both = _.intersection(followers, friends);
 				$.post("/union/", {
 					union: both.join(","),
-					username: username,
-					whiteList : trousers.whiteList.getWhiteListParam()
+					username: username
 				}, function(data) {
 					var throwaway = trousers.showReturnedList(data, ".both_f_and_f");
 				});
@@ -29,6 +28,15 @@ $(document).ready(function() {
 					whiteList : trousers.whiteList.getWhiteListParam()
 				}, function(data) {
 					var throwaway = trousers.showReturnedList(data, ".non_followers");
+
+				});
+			},function() {
+				var whiteList = extractArray(pLayer.get("whiteList"));
+				$.post("/union/", {
+					union: whiteList.join(","),
+					username: username
+				}, function(data) {
+					var throwaway = trousers.showReturnedList(data, ".white_list");
 
 				});
 			});
@@ -53,7 +61,7 @@ trousers.showReturnedList = function(str, classNameOfTarget) {
 
 trousers.getProfileEntry = function(body) {
 	var str = "<div class='entry'><img src='" + body.profile_image_url + "'/>";
-	str += "<p><label data-id='" + body.id + "'>@" + body.screen_name + "</label><br/><b>Following/Followers</b>:<span class='counter'>" + body.friends_count + "/" + body.followers_count + "</span></p>";
+	str += "<p><label data-id='" + body.id + "'>@" + body.screen_name + "</label><br/><b>Follows</b>:<span class='counter'>" + body.friends_count + "<br/><b>Following:</b>" + body.followers_count + "</span></p>";
 
 	return str;
 };
@@ -67,7 +75,7 @@ trousers.getIds = function(data) {
 };
 
 trousers.setAjaxSpinner = function() {
-	$('#spinAjax').hide().ajaxStart(function() {
+	$('.spin_ajax').hide().ajaxStart(function() {
 		$(this).show();
 	}).ajaxStop(function() {
 		$(this).hide();
@@ -93,3 +101,12 @@ trousers.whiteList.getWhiteListParam = function() {
 
 	return obj ? JSON.stringify(obj) : "";
 };
+
+function extractArray(json){
+	var arr = [];
+
+	for (var i in json){
+		arr.push(i);
+	}
+return arr.sort();
+}

@@ -2,7 +2,7 @@ extends layout
 block content
   h1= title
   p #{title} - Follow your followers
-  #spinAjax
+  #spinAjax.spin_ajax
    img(src='images/loader.gif')
   form(id='trousers_form')
    b @
@@ -28,7 +28,12 @@ block content
     .box_title
      b Following: 
      span(class='counter friends_label')
-    .friends 
+    .friends
+   div.non_block
+    .box_title
+     b White List: 
+     span(class='counter white_list_label')
+    .white_list 
 
   
 
