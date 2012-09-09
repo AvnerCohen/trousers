@@ -5,9 +5,16 @@ block content
   #spinAjax.spin_ajax
    img(src='images/loader.gif')
   form(id='trousers_form')
+   input(type='radio', name='behavior', value='white_listing', checked='true')
+   span White Listing
+   input(type='radio', name='behavior', value='followback_ratio')
+   span Followback ratio
+   br
    b @
-   input(type='text', name='username', id='username', placeholder="What's your @Twitter?")
-   button !
+   input(type='text', name='username', id='username', placeholder="What's your @Twitter?", required="true")
+   span.ratio --- 
+   br
+   button Yalla!
    br
   div.non_block
    .box_title
@@ -34,6 +41,3 @@ block content
     b White List: 
      span(class='counter white_list_label')
    .white_list 
-
-  
-

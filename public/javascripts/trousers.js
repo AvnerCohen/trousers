@@ -4,6 +4,22 @@ $(document).ready(function() {
 
 	$("#trousers_form").on("submit", function() {
 
+		var type = $("input:radio[name=behavior]:checked").val();
+		if (type === "white_listing"){
+			trousers.handleWhiteListingSubmit();
+		} else{
+			//manage followback ratio calculation
+			trousers.handleFollowBackRatioSubmit();
+		}
+
+		return false;
+	});
+
+	$("div.non_followers").on("click", ".entry label", trousers.whiteList.add);
+}); //end ondocumentready
+var trousers = {};
+
+trousers.handleWhiteListingSubmit = function(){
 		var followers, friends; //Globals, need to find a cleaner way though.
 		var username = $("#username").val();
 		username = username.replace("@", ""); //Clean up, for safety;
@@ -41,12 +57,17 @@ $(document).ready(function() {
 				});
 			});
 		});
-		return false;
-	});
 
-	$("div.non_followers").on("click", ".entry label", trousers.whiteList.add);
-}); //end ondocumentready
-var trousers = {};
+};
+
+trousers.handleFollowBackRatioSubmit = function(){
+		var username = $("#username").val();
+		username = username.replace("@", ""); //Clean up, for safety;
+		$.post("followback_ratio", {username: username}, function (data){
+			$(".ratio").html(data);
+		});
+};
+
 
 trousers.showReturnedList = function(str, classNameOfTarget) {
 	var data = JSON.parse(str);
@@ -61,7 +82,7 @@ trousers.showReturnedList = function(str, classNameOfTarget) {
 
 trousers.getProfileEntry = function(body) {
 	var str = "<div class='entry'><img src='" + body.profile_image_url + "'/>";
-	str += "<p><label data-id='" + body.id + "'>@" + body.screen_name + "</label><br/><b>Follows</b>:<span class='counter'>" + body.friends_count + "<br/><b>Following:</b>" + body.followers_count + "</span></p>";
+	str += "<p><label data-id='" + body.id + "'>@" + body.screen_name + "</label><br/><b>Follows</b>: <span class='counter'>" + body.friends_count + "<br/><b>Following:</b> " + body.followers_count + "</span></p>";
 
 	return str;
 };
