@@ -9,10 +9,10 @@ var twit = new twitter({
 	access_token_secret: process.env.access_token_secret
 });
 
-console.log("Log key:[" + process.env.consumer_key + "]");
-console.log("Log key:[" + process.env.consumer_secret + "]");
-console.log("Log key:[" + process.env.access_token_key + "]");
-console.log("Log key:[" + process.env.access_token_secret + "]");
+console.log("Log consumer_key:[" + process.env.consumer_key + "]");
+console.log("Log consumer_secret:[" + process.env.consumer_secret + "]");
+console.log("Log access_token_key:[" + process.env.access_token_key + "]");
+console.log("Log access_token_secret:[" + process.env.access_token_secret + "]");
 
 
 exports.followers = function(req, res) {
