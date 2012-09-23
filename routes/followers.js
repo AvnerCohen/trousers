@@ -106,6 +106,7 @@ exports.followback_ratio = function(req, res) {
 				});
 			} else { //Some error occured
 				res.send("Error occured, try again in a week or so.");
+				console.log(error);
 			}
 		});
 	};
