@@ -9,6 +9,8 @@ var twit = new twitter({
 	access_token_secret: process.env.access_token_secret
 });
 
+console.log("Log key:[" + process.env.consumer_key + "]");
+
 
 exports.followers = function(req, res) {
 	var name = req.body.username;
