@@ -10,6 +10,9 @@ var twit = new twitter({
 });
 
 console.log("Log key:[" + process.env.consumer_key + "]");
+console.log("Log key:[" + process.env.consumer_secret + "]");
+console.log("Log key:[" + process.env.access_token_key + "]");
+console.log("Log key:[" + process.env.access_token_secret + "]");
 
 
 exports.followers = function(req, res) {
