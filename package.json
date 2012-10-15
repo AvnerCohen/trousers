@@ -10,7 +10,8 @@
     "jade": "*",
     "request": "~2.11.0",
     "lodash": "~0.6.1",
-    "ntwitter": "~0.5.0"
+    "ntwitter": "~0.5.0",
+    "async": "~0.1.22"
   },
   "engines": {
     "node": "0.8.x",
