@@ -63,6 +63,7 @@ div.non_followers .entry label:after {
 }
 .non_block{
 	display:inline-block;
+	float:left;
 }
 
 .ratio{
