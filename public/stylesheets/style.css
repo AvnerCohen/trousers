@@ -13,7 +13,7 @@ a {
 	clear:both;
 }
 .non_followers, .followers, .both_f_and_f, .friends, .white_list{
-	height: 450px;
+	height: 350px;
 	overflow-y:scroll;
 }
 .counter{
@@ -70,4 +70,12 @@ div.non_followers .entry label:after {
 	padding-left:60px;
 	font-size:24px;
 	color:black;
+}
+
+.time_line_content{
+  height:100px;
+}
+.time_line_content{
+    height:100px;
+    overflow-y:scroll;
 }

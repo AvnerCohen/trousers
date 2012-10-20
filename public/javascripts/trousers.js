@@ -29,6 +29,7 @@ trousers.handleWhiteListingSubmit = function() {
 	}, function(data) {
 		console.log("back from /followers");
 		followers = trousers.showReturnedList(data, ".followers");
+		trousers.timeline.saveLog(data);
 	}).then(function() {
 		$.post("/friends/", {
 			username: username,
@@ -82,14 +83,17 @@ trousers.handleFollowBackRatioSubmit = function() {
 
 
 trousers.showReturnedList = function(data, classNameOfTarget) {
-	var cont = $(classNameOfTarget).eq(0);
-	cont.html(""); // clean up
-	var totalLength = 0;
-	for(var i in data) {
-		totalLength++;
-		cont.append(trousers.getProfileEntry(data[i]));
-	}
-	$(classNameOfTarget + "_label").html(totalLength);
+	window.setTimeout(function(){
+		var cont = $(classNameOfTarget).eq(0);
+		cont.html(""); // clean up
+		var totalLength = 0;
+		for(var i in data) {
+			totalLength++;
+			cont.append(trousers.getProfileEntry(data[i]));
+		}
+
+		$(classNameOfTarget + "_label").html(totalLength);
+	}, 10);
 
 	return trousers.getIds(data);
 };
@@ -136,6 +140,54 @@ trousers.whiteList.getWhiteListParam = function() {
 
 	return obj ? JSON.stringify(obj) : "";
 };
+
+trousers.timeline = {}; //Keep log of changes in followers from one check to another
+trousers.timeline.localStoragePrefix = "trousers_";
+trousers.timeline.changesToLog = ""; //String to be injected later, if needed.
+//Keep a log of current followers and indicatetimeline changes.
+
+trousers.timeline.saveLog = function(followers){
+
+	var rel_user_name = $("#username").val() + "_";
+	var lastLocalStorageEntry = 0;
+	var previousLog = {};
+	while (previousLog !== null){
+		previousLog = pLayer.get(trousers.timeline.localStoragePrefix + rel_user_name + (++lastLocalStorageEntry));
+	}
+
+	previousLog = pLayer.get(trousers.timeline.localStoragePrefix + rel_user_name + (lastLocalStorageEntry-1)); //Go back one step to get actual data
+	var lastData = previousLog ? previousLog.split(",") : [];
+	var prevKey = lastData.sort();
+	var currentKey = trousers.timeline.getTimeLineKey(followers);
+
+	//console.log("prevKey:"+prevKey.join(","));
+	//console.log("currentKey:"+currentKey.join(","));
+
+	//Save new key if differnt
+	if (prevKey.join(",") !== currentKey.join(",")){
+		pLayer.set(trousers.timeline.localStoragePrefix + rel_user_name + (lastLocalStorageEntry), currentKey.join(","));
+		trousers.timeline.logToTimeLine("Direction one: " + _.difference(prevKey, currentKey));
+		trousers.timeline.logToTimeLine("Direction two: " + _.difference(currentKey, prevKey));
+		console.log("Difference, logged: " + trousers.timeline.localStoragePrefix + rel_user_name + (lastLocalStorageEntry));
+	}else{
+		trousers.timeline.logToTimeLine("No Change!")
+	}
+
+};
+
+trousers.timeline.getTimeLineKey = function(json){
+	var array = [];
+	for (var t in json){
+		array.push(json[t].screen_name);
+	}
+	
+	return array.sort();
+};
+
+trousers.timeline.logToTimeLine = function(str){
+	console.log(str);
+	$(".time_line_details").append("<li>" + str + "</li>");
+}
 
 function extractArray(json) {
 	var arr = [];
