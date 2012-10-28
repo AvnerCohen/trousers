@@ -23,8 +23,8 @@ exports.followers = function(req, res) {
 	//Get followers
 	//Get data for each follower using showUser
 	twit.getFollowersIds(name, function(error, response) {
-		var ids = response;
-		twit.showUser(ids, function(error, response) {
+		var followerIds = response;
+		twit.showUser(followerIds, function(error, response) {
 			//Replyng with:
 			res.send(response);
 		});
@@ -39,17 +39,18 @@ exports.friends = function(req, res) {
 	var dataArray = [];
 	twit.getFriendsIds(name, function(error, response) {
 		var calls = 0;
-		var ids = response;
+		var friends_ids = response;
 		var arrIdsChunks = [];
 		do {
-			arrIdsChunks.push(ids.splice(0, 99));
-		} while (ids.length > 0);
+			arrIdsChunks.push(friends_ids.splice(0, 99));
+		} while (friends_ids.length > 0);
 
-		var func = function(ids) {
-				console.log("before " + ids.length);
-				twit.showUser(ids, function(error, response) {
+
+		var func = function(friends_ids) {
+				console.log("before " + friends_ids.length);
+
+				twit.showUser(friends_ids, function(error, response) {
 					calls++;
-					console.log("inside" + dataArray.length);
 					dataArray.push(response);
 					if(calls < arrIdsChunks.length) {
 						func(arrIdsChunks[calls]);
@@ -62,11 +63,14 @@ exports.friends = function(req, res) {
 		var complete = function() {
 				var combined = {};
 				var delta = 0;
+
 				for(var t = 0; t < dataArray.length; t++) {
 					var updated = (delta > 0) ? increase(dataArray[t], delta) : dataArray[t];
 					combined = _.extend(combined, updated);
-					delta+=dataArray.length;
+
+					delta+=dataArray[t].length;
 				}
+
 				res.send(combined);
 				console.log("after Callback" + dataArray.length);
 			};
